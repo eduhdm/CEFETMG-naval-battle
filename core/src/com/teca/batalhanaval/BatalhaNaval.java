@@ -7,14 +7,17 @@ public class BatalhaNaval extends Game {
 	public SpriteBatch batch;
     private String dificuldade;
    
+    public String getDificuldade(){
+    	return dificuldade; 
+    }
+    
     public void setDificuldade(String str){
     	dificuldade = str; 
     }
     
     public void create() {
         batch = new SpriteBatch();
-        //Use LibGDX's default Arial font.
-      
+        
         this.setScreen(new MainMenuScreen(this));
         
     }
