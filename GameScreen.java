@@ -35,10 +35,31 @@ public class GameScreen implements Screen {
 				++aux;
 		}
 		if(aux==10){
-			strStatus = "VOCÊ GANHOU!!!";
+			strStatus = "VOCÊ GANHOU!!! \n clique na tela de ganhou para começar de novo";
 			return true;
 		}
 		else return false;
+	}
+	
+	public void reset(){
+		logc.reset();
+		strStatus = " Bem Vindo ao Jogo Batalha Naval\n"
+				+ "É possivel ver a quantidade de bombas que voce tem no canto inferior direito\n"
+				+ "Marcas azuis representam tiro na agua e marcas vermelhas tiro nos Barcos";
+		win = false;
+		for (int i = 0; i < tab.length; i++) {
+			for (int j = 0; j < tab[i].length; j++) {
+				tab[i][j]="vazio";
+			}
+		}
+		
+		if (game.getDificuldade() == "easy") {
+			quantidadeDeBombas = 60;
+		} else if (game.getDificuldade() == "medium") {
+			quantidadeDeBombas = 50;
+		} else if (game.getDificuldade() == "hard") {
+			quantidadeDeBombas = 40;
+		}
 	}
 	
 	public void barcoDestruido() {
@@ -409,26 +430,36 @@ public class GameScreen implements Screen {
 			game.batch.draw(looseScreen, 10+100, 100 + 20 + 80 , 440, 440);
 		if (win)
 			game.batch.draw(winScreen, 10+100, 100 + 20 + 80 , 440, 440);
+		
 		game.batch.end();
 
 		// process user input
-
-		if (Gdx.input.justTouched() && quantidadeDeBombas > 0 && !win) {// confere os clicks na matriz
-				getTabClick();
-		}
-
 		if (quantidadeDeBombas <= 0) {
 			strStatus = "ACABARAM SUAS BOMBAS E VOCÊ AINDA NÃO DESTRUIU TODOS OS BARCOS\n"
-					+ "SE DESEJA CONTINUAR COM MAIS 20 BOMBAS\n CLIQUE EM CIMA DA IMAGEM DE PERDEU";
+					+ "SE DESEJA REINICIAR\n CLIQUE EM CIMA DA IMAGEM DE PERDEU";
 			
 			if (Gdx.input.justTouched()) {
 				touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 				camera.unproject(touchPos);
 				if (touchPos.x >= 10 + 100 && touchPos.x <= 440 + 10 + 100 
 					&& touchPos.y >= 100 + 20 && touchPos.y <= 440 + 100 + 20)
-					quantidadeDeBombas = 20;
+					reset();
 			}
+			
 		}
+		if (win && Gdx.input.justTouched()){
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touchPos);
+			if (touchPos.x >= 10 + 100 && touchPos.x <= 440 + 10 + 100 
+				&& touchPos.y >= 100 + 20 && touchPos.y <= 440 + 100 + 20)
+				reset();
+		}
+		
+		if (Gdx.input.justTouched() && quantidadeDeBombas > 0 && !win) {// confere os clicks na matriz
+				getTabClick();
+		}
+
+	
 	}
 
 	@Override

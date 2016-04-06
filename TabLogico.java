@@ -15,8 +15,17 @@ public class TabLogico {
 			}
 		}
 		setTabuleiroBatalhaNaval();
-
 	}
+	
+	public void reset(){
+		for (int i = 0; i < tabuleiro.length; ++i) {
+			for (int j = 0; j < tabuleiro[i].length; ++j) {
+				tabuleiro[i][j] = 0;
+			}
+		}
+		setTabuleiroBatalhaNaval();
+	}
+	
 	public void setTabuleiroBatalhaNaval(){
 		barcos = new Barco[10];
 		/*for(int i=0;i<10;i++){
