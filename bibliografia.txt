@@ -1,1 +1,0 @@
-https://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/Input.html
